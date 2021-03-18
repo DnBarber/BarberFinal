@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devin Barber Final : Edit Database</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="wrapper">
+        <h1>Datbase : Edit Mode</h1>
+        <hr style="width:100%; height:2px; background-color:black; border:none;" />
+        <nav>
+            <a href="index.html">Return to Database</a>
+        </nav>
+        <script>
+           fetch('/download').then(function(datas){
+                datas.json().then(function(retrieveScore){
+                    for(let data of retrieveScore.data){
+
+                        var inputElement = document.createElement('input')
+                        inputElement.type = "text"
+                        inputElement.value = data.playername;
+                        document.getElementById('wrapper').appendChild(inputElement)
+
+                        var scoreElement = document.createElement('p')
+                        scoreElement.innerHTML = "Score: " + data.score + " | Games Played: " + data.gamesplayed + "   "
+                        document.getElementById('wrapper').appendChild(scoreElement)
+
+                        var deleteBtn = document.createElement('button');
+                        deleteBtn.innerText = 'Delete';
+                        deleteBtn.addEventListener('click', function deleteGame(){
+                            location.reload();
+                            fetch('/deleteGame', {
+                            method:"POST",
+                            headers:{
+                                "Content-Type":"application/json"
+                            },
+                            body:JSON.stringify({
+                                _id:data._id
+                            })
+                        });
+                        });
+                        scoreElement.appendChild(deleteBtn);
+                    }
+                })
+            })
+        </script>
+    </div>
+</body>
+</html>

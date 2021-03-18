@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devin Barber Final : Database</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="wrapper">
+        <h1>Database</h1>
+        <hr style="width:100%; height:2px; background-color:black; border:none;" />
+        <nav>
+            <a href="editdata.html">Edit Data</a>
+        </nav>
+        <script>
+           fetch('/download').then(function(datas){
+                datas.json().then(function(retrieveScore){
+                    for(let data of retrieveScore.data){
+                        var scoreElement = document.createElement('p')
+                        scoreElement.innerHTML = 'Name: ' + data.playername + " | Score: " + data.score + " | Games Played: " + data.gamesplayed 
+                        document.getElementById('wrapper').appendChild(scoreElement)
+                    }
+                })
+            })
+        </script>
+    </div>
+</body>
+</html>
